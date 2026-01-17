@@ -12,7 +12,9 @@ class Simulation:
     
     random.seed(config["simulation"]["random_seed"])
     np.random.seed(config["simulation"]["random_seed"])
+    
     self._initialize_agents()
+    self._initialize_network()
     
   def _initialize_agents(self):
     agent_config = self.config["agents"]  
