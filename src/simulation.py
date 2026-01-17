@@ -47,3 +47,22 @@ class Simulation:
       network_config["average_degree"],
       network_config["rewiring_probability"]
     )
+    
+  def step(self):
+    update_config = self.config["update_rule"]
+    noise_config = self.config["emotional_noise"]
+    
+    for i, j in self.network.edges():
+      agent_i = self.agents[i]
+      agent_j = self.agents[j]
+      
+      if agent_i.can_interact(agent_j, update_config["bounded_confidence"]):
+        noise = 0.0
+        if noise_config["enabled"]:
+          noise = np.random.normal(0, noise_config["sigma"])
+          
+        agent_i.update_opinion(
+          agent_j.opinion,
+          update_config["learning_rate"],
+          noise
+        ) 
