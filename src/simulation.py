@@ -79,3 +79,15 @@ class Simulation:
     """
     opinions = [agent.opinion for agent in self.agents.values()]
     return np.var(opinions)  
+  
+  def run(self):
+    max_steps = self.config["simulation"]["max_steps"]
+    threshold = self.config["simulation"]["convergence_threshold"]
+    
+    for step in range(max_steps):
+      self.step()
+      self.record_state()
+      
+      if self.global_variance() < threshold:
+        print(f"Converged at step {step}.")
+        break
