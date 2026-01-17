@@ -14,7 +14,7 @@ simulation:
 # ===============================
 
 network:
-  type: small_world              # options: random, small_world, scale_free
+  type: small_world              
   num_agents: 100
   average_degree: 6
   rewiring_probability: 0.1
