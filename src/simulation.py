@@ -66,3 +66,9 @@ class Simulation:
           update_config["learning_rate"],
           noise
         ) 
+        
+  def record_state(self):
+    opinions = [agent.opinion for agent in self.agents.values()]
+    self.history.append(opinions)
+    
+    
