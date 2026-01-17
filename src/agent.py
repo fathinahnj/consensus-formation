@@ -33,3 +33,5 @@ class Agent:
     delta *= (1 - self.stubbornness)        # slower change for stubborn agents
     
     self.opinion += delta + noise
+    
+    self.opinion = max(-1.0, min(1.0, self.opinion))  # ensure opinion stays within bounds [-1, 1]
