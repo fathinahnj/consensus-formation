@@ -2,7 +2,7 @@ import random
 import numpy as np
 import networkx as nx
 
-from src.agent import Agent
+from agent import Agent
 class Simulation:
   def __init__(self, config):
     self.config = config,
