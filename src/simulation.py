@@ -71,4 +71,11 @@ class Simulation:
     opinions = [agent.opinion for agent in self.agents.values()]
     self.history.append(opinions)
     
-    
+  def global_variance(self):
+    """
+    To calculate the global variance of opinions in the network (consensus / polarization measure)
+    Returns:
+        : variance of opinions (float)
+    """
+    opinions = [agent.opinion for agent in self.agents.values()]
+    return np.var(opinions)  
