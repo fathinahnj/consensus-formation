@@ -1,0 +1,85 @@
+# ===============================
+# Global Simulation Parameters
+# ===============================
+
+simulation:
+  random_seed: 42
+  max_steps: 1000
+  convergence_threshold: 0.01   # global opinion variance threshold
+  runs_per_experiment: 30
+
+
+# ===============================
+# Network Configuration
+# ===============================
+
+network:
+  type: small_world              # options: random, small_world, scale_free
+  num_agents: 100
+  average_degree: 6
+  rewiring_probability: 0.1
+
+
+# ===============================
+# Agent Initialization
+# ===============================
+
+agents:
+  opinion:
+    min: -1.0
+    max: 1.0
+    distribution: uniform
+
+  confidence:
+    min: 0.3
+    max: 0.7
+    distribution: uniform
+
+  open_mindedness:
+    min: 0.3
+    max: 0.7
+    distribution: uniform
+
+  stubbornness:
+    min: 0.1
+    max: 0.4
+    distribution: uniform
+
+
+# ===============================
+# Opinion Update Parameters
+# ===============================
+
+update_rule:
+  learning_rate: 0.2             # μ
+  bounded_confidence: 0.3         # θ
+
+
+# ===============================
+# Emotional Noise (Distortion 1)
+# ===============================
+
+emotional_noise:
+  enabled: true
+  sigma: 0.1                     # standard deviation of Gaussian noise
+
+
+# ===============================
+# Consensus Pressure (Distortion 2)
+# ===============================
+
+consensus_pressure:
+  enabled: true
+  local_variance_threshold: 0.05  # δ
+  conformity_strength: 0.15       # λ
+
+
+# ===============================
+# Perturbation Test
+# ===============================
+
+perturbation:
+  enabled: true
+  step_after_convergence: 50
+  affected_fraction: 0.1
+  opinion_shift: 0.3
