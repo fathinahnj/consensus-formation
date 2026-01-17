@@ -1,7 +1,8 @@
 import random
 import numpy as np
-from src.agent import Agent
+import networkx as nx
 
+from src.agent import Agent
 class Simulation:
   def __init__(self, config):
     self.config = config,
@@ -36,3 +37,11 @@ class Simulation:
       )
         
       self.agents[i] = Agent(i, opinion, confidence, open_mindedness, stubbornness)
+      
+  def _initialize_network(self):
+    network_config = self.config["network"]
+    self.network = nx.watts_strogatz_graph(
+      network_config["num_agents"],
+      network_config["average_degree"],
+      network_config["rewiring_probability"]
+    )
