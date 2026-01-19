@@ -51,10 +51,18 @@ class Simulation:
   def step(self):
     update_config = self.config["update_rule"]
     noise_config = self.config["emotional_noise"]
+    pressure_config = self.config["consensus_pressure"]
     
-    for i, j in self.network.edges():
+    for i in self.network.nodes():
       agent_i = self.agents[i]
-      agent_j = self.agents[j]
+      
+      neighbors = list(self.network.neighbors(i))
+      if not neighbors:
+        continue
+      
+      ### Pairwise interactions
+      j = random.choice(neighbors)
+      agent_j = self.agents[j]  
       
       if agent_i.can_interact(agent_j, update_config["bounded_confidence"]):
         noise = 0.0
@@ -65,7 +73,20 @@ class Simulation:
           agent_j.opinion,
           update_config["learning_rate"],
           noise
-        ) 
+        )
+          
+      ### Global interactions (consensus pressure)
+      if pressure_config["enabled"]:
+        neighbor_opinions = [self.agents[n].opinion for n in neighbors]
+        local_variance = np.var(neighbor_opinions)
+        
+        if local_variance < pressure_config["local_variance_threshold"]:
+          local_mean = np.mean(neighbor_opinions)
+          drift = pressure_config["conformity_strength"] * (local_mean - agent_i.opinion)
+          agent_i.opinion += drift
+          
+          # Clamp
+          agent_i.opinion = max(-1.0, min(1.0, agent_i.opinion))
         
   def record_state(self):
     opinions = [agent.opinion for agent in self.agents.values()]
