@@ -2,12 +2,12 @@ import random
 import numpy as np
 import networkx as nx
 
-from agent import Agent
+from src.agent import Agent
 class Simulation:
   def __init__(self, config):
-    self.config = config,
-    self.agents = {},
-    self.network = None,
+    self.config = config
+    self.agents = {}
+    self.network = None
     self.history = []
     
     random.seed(config["simulation"]["random_seed"])
